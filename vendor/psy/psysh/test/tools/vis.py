@@ -102,8 +102,8 @@ def vis(src, flags=VIS_WHITE):
     flags = c_int(flags)
 
     bytes_written = _strvis(dst_p, src_p, flags)
-    if -1 == bytes_written:
-        raise RuntimeError('vis failed to encode string "{}"'.format(src))
+    if bytes_written == -1:
+        raise RuntimeError(f'vis failed to encode string "{src}"')
 
     return dst_p.value.decode('utf-8')
 
@@ -120,7 +120,7 @@ def unvis(src):
     src_p = c_char_p(src)
 
     bytes_written = _strunvis(dst_p, src_p)
-    if -1 == bytes_written:
-        raise RuntimeError('unvis failed to decode string "{}"'.format(src))
+    if bytes_written == -1:
+        raise RuntimeError(f'unvis failed to decode string "{src}"')
 
     return dst_p.value.decode('utf-8')
